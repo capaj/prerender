@@ -1,7 +1,6 @@
 var phantom = require('phantom'),
     http = require('http'),
     url = require('url'),
-    cache_manager = require('cache-manager'),
     cache = {
         get: function (url, cb) {
             cb(null, null);
@@ -9,13 +8,6 @@ var phantom = require('phantom'),
         set: function (url, result) {
         }
     };
-
-if (process.argv[2] != null && (process.argv[2] == '-c' || process.argv[2] == '--cache')) {
-    console.log('Prerender started with caching turned ON');
-    cache = cache_manager.caching({
-        store: 'memory', max: 100, ttl: 60/*seconds*/
-    });
-}
 
 var getUrl = function(req) {
     if (req.url.indexOf('_escaped_fragment_') ==-1) return req.url;
@@ -29,7 +21,12 @@ var getUrl = function(req) {
     return url.format(parts);
 };
 
-phantom.create('--load-images=false', {
+phantom.create({
+    "ignoreSslErrors": true,
+    "maxDiskCacheSize": 51000,
+    "diskCache": true,
+    "loadImages": false
+}, {
     binary: require('phantomjs').path
 }, function (phantom) {
     http.createServer(function (req, res) {

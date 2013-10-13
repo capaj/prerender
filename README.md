@@ -9,22 +9,13 @@ It is also meant to be proxied through your server so that any relative links to
 
 It is currently deployed at `http://prerender.herokuapp.com`, or you can deploy your own.
 
-## Deploying your own
-
-	$ git clone https://github.com/collectiveip/prerender.git
-	$ heroku create
-	$ git push heroku master
-
 ## Running locally
 If you are running the prerender service locally. Make sure you set your middleware to point to your local instance with:
 `export PRERENDER_SERVICE_URL=<your local url>`
 Otherwise, it will 404 and your normal routing will take over and render the normal JS page.
 	
-	$ npm install
-	$ node index.js
-	// also supports heroku style invocation using foreman
-	$ foreman start
-
+	npm install
+	node index.js
 
 ## How it works
 This is a simple service that only takes a url and returns the rendered HTML (with all script tags removed).
@@ -41,8 +32,7 @@ We remove script tags because we don't want any framework specific routing/rende
 For example, if you rendered the HTML of an angular page but left the angular scripts in there, your browser would try to execute the angular routing and rendering on a page that no longer has any angular bindings.
 
 ## Cache management
-We use cache management to reduce the latency on common requests  
-The default is an in memory cache but you can easily change it to any caching system compatible with the `cache-manager` nodejs package.
+###Available on original repo, this fork does not offer Cache management. Maybe in the future.
 
 For example, with the request:
 

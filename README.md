@@ -17,6 +17,12 @@ Otherwise, it will 404 and your normal routing will take over and render the nor
 	npm install
 	node index.js
 
+If npm install for phantomjs fails, you can always download phantom.js built executable on official page and copy it into
+
+    node_modules\phantomjs\bin\
+
+Worked for me.
+
 ## How it works
 This is a simple service that only takes a url and returns the rendered HTML (with all script tags removed).
 
